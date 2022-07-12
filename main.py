@@ -1,0 +1,31 @@
+import streamlit as st
+from fastai.vision.core import PILImage
+from fastai.learner import load_learner
+from PIL import Image
+
+# load the model
+wildlife_predictor = load_learner('./wildlife_model.pkl')
+
+
+def make_inference(img):
+    # make predictions
+    return wildlife_predictor.predict(PILImage.create(img))
+
+
+def get_id(animal):
+    if animal == 'cheetah':
+        return 0
+    if animal == 'lion':
+        return 1
+    else:
+        return 2
+
+st.title('Classify big cats')
+image = st.file_uploader("Upload an image of a cheetah, a tiger, or a lion")
+
+if image is not None:
+    st.image(Image.open(image))
+    pred = make_inference(image)
+    'Click classify to find out, whether your image is a cheetah, a tiger, or a lion.'
+    if st.button('Classify'):
+        'Your image displays a ', pred[0], ", with probability: ", str(pred[2][get_id(pred[0])].item()), '.'
