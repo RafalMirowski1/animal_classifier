@@ -20,8 +20,13 @@ def get_id(animal):
     else:
         return 2
 
-st.title('Classify big cats')
-image = st.file_uploader("Upload an image of a cheetah, a tiger, or a lion")
+
+st.title('Animal classifier')
+'This app uses a neural network to classify images into three categories: cheetahs, tigers, and lions.'
+'If you want to test it, just upload an image of your category of choice below.'
+'Do note, that if you upload an image that is not in one of the three categories you will get some funny results, ' \
+'but feel free to experiment. '
+image = st.file_uploader("Upload an image")
 
 if image is not None:
     st.image(Image.open(image))
